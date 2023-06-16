@@ -1,0 +1,75 @@
+GET http://localhost:8080
+
+###
+GET http://localhost:8080/api/v1/session
+
+###
+
+GET http://localhost:8080/api/v1/authors
+
+###
+GET http://localhost:8080/api/v1/authors/{author-id}
+
+###
+PUT http://localhost:8080/api/v1/users/deactivate/{author-id}
+
+###
+
+POST http://localhost:8080/api/v1/users
+Content-Type: application/json
+
+{
+  "name": "test user",
+  "email": "test@test.com",
+  "password": "test123",
+  "role": "author"
+}
+
+###
+POST http://localhost:8080/api/v1/login
+Content-Type: application/json
+
+{
+  "username": "test@test.com",
+  "password": "test123"
+}
+
+###
+POST http://localhost:8080/api/v1/logout
+
+
+
+###
+GET http://localhost:8080/api/v1/blogs
+
+
+###
+GET http://localhost:8080/api/v1/blogs/{blog-id}
+
+###
+POST http://localhost:8080/api/v1/reactions/{blog-id}
+Content-Type: application/json
+
+{
+  "reactionType": "thumbsUp"
+}
+
+
+###
+POST http://localhost:8080/api/v1/blogs
+Content-Type: application/json
+
+{
+  "title": "test blog",
+  "slug": "test-blog",
+  "content": "Sandesh Hyoju working hard"
+}
+
+###
+PUT http://localhost:8080/api/v1/blogs/0213556b-54cb-4e40-a8b5-9dc6e3541eea
+Content-Type: application/json
+
+{
+  "title": "testing blog",
+  "content": "Sandesh Hyoju working hard",
+}

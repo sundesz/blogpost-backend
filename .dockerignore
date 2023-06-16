@@ -1,0 +1,12 @@
+.dockerignore
+Dockerfile
+dev.Dockerfile
+.git
+.gitignore
+request
+node_modules
+.env
+.env.template
+.prettierrc.json
+pgdata-dev
+pgdata
