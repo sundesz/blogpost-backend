@@ -1,9 +1,9 @@
 import { NextFunction, RequestHandler } from 'express';
 // import { Op, Sequelize } from 'sequelize';
 import { sequelize } from '../../db';
-import { Blog, Comment, Image, Rating, User } from '../../db/models';
+import { Blog, Comment, Rating, User } from '../../db/models';
 import { NewBlogType, UpdateBlogType, ReactionType } from '../../types';
-import { ImageType } from '../../types/images';
+// import { ImageType } from '../../types/images';
 
 /**
  * Reaction count subquery
@@ -141,9 +141,9 @@ const create: RequestHandler = async (req, res, next: NextFunction) => {
       content,
       published,
       slug,
-      name,
-      originalName,
-      fileLocation,
+      // name,
+      // originalName,
+      // fileLocation,
     } = req.body as NewBlogType;
     const blog = await Blog.create(
       {
@@ -157,13 +157,13 @@ const create: RequestHandler = async (req, res, next: NextFunction) => {
       // { returning: false }
     );
 
-    await Image.create({
-      // imageType: 'blog',
-      blogId: blog.blogId,
-      name,
-      originalName,
-      fileLocation,
-    });
+    // await Image.create({
+    //   // imageType: 'blog',
+    //   blogId: blog.blogId,
+    //   name,
+    //   originalName,
+    //   fileLocation,
+    // });
 
     res.json(blog.slug);
   } catch (error: unknown) {
