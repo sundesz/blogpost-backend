@@ -40,7 +40,6 @@
   },
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "project": "./server/tsconfig.json"
-    // "project": "./tsconfig.json"
+    "project": "./tsconfig.json"
   }
 }
