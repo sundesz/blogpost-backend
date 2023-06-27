@@ -8,11 +8,11 @@ export const errorHandler: ErrorRequestHandler = (error, _req, res, next) => {
           .status(400)
           .json('Title must be unique. Also check the empty spaces in title.');
       }
-      return res.status(400).json(error.errors[0].message as string);
+      return res.status(400).json(error.errors[0].message);
     case 'SequelizeValidationError':
-      return res.status(400).json(error.errors[0].message as string);
+      return res.status(400).json(error.errors[0].message);
     default:
-      return res.status(400).json(error.message as string);
+      return res.status(400).json(error.message);
   }
   next(error);
 };

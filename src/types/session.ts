@@ -1,6 +1,6 @@
 import { UserRoleType } from './users';
 
-export interface ISession {
+export interface SessionAttributes {
   sid: string;
   userId?: string;
   isValid: boolean;
@@ -11,9 +11,9 @@ export interface ISession {
   updatedAt?: string;
 }
 
-export type SessionInputType = Omit<ISession, 'sid'>;
+export type SessionInputAttributes = Omit<SessionAttributes, 'sid'>;
 
-export interface ISessionData {
+export interface SessionDataAttributes {
   name: string;
   email: string;
   userId: string;

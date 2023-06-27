@@ -1,8 +1,11 @@
 import { DataTypes, Model } from 'sequelize';
-import { IBlog, IBlogInput } from '../../types/blogs';
+import { BlogAttributes, BlogInputAttributes } from '../../types/blogs';
 import { sequelize } from '../index';
 
-class Blog extends Model<IBlog, IBlogInput> implements IBlog {
+class Blog
+  extends Model<BlogAttributes, BlogInputAttributes>
+  implements BlogAttributes
+{
   public blogId!: string;
   public userId!: string;
   public title!: string;
@@ -58,7 +61,7 @@ Blog.init(
     sequelize,
     underscored: true,
     timestamps: true,
-    modelName: 'blog',
+    modelName: 'Blog',
   }
 );
 

@@ -1,8 +1,11 @@
 import { Model, DataTypes } from 'sequelize';
-import { ISession, SessionInputType } from '../../types/session';
+import { SessionAttributes, SessionInputAttributes } from '../../types/session';
 import { sequelize } from '../index';
 
-class Session extends Model<ISession, SessionInputType> implements ISession {
+class Session
+  extends Model<SessionAttributes, SessionInputAttributes>
+  implements SessionAttributes
+{
   public sid!: string;
   public userId!: string;
   public isValid!: boolean;

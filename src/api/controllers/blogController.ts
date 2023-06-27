@@ -1,9 +1,14 @@
 import { NextFunction, RequestHandler } from 'express';
-// import { Op, Sequelize } from 'sequelize';
 import { sequelize } from '../../db';
 import { Blog, Comment, Rating, User } from '../../db/models';
-import { NewBlogType, UpdateBlogType, ReactionType } from '../../types';
-// import { ImageType } from '../../types/images';
+import {
+  AllQueryParams,
+  NewBlogParams,
+  ReactionType,
+  UpdateBlogParams,
+} from '../../types';
+import { getPagination, getPagingData } from './helper';
+import { Op } from 'sequelize';
 
 /**
  * Reaction count subquery
@@ -34,12 +39,20 @@ const ratingCountSubQuery = (slug: string, rating: number) => {
       AND ratings.rating ='${rating}')`);
 };
 
+interface BlogParams {
+  slug: string;
+}
+
 /**
  * Get a blog
  */
-const getBlog: RequestHandler = async (req, res, next: NextFunction) => {
+const getBlog: RequestHandler<BlogParams> = async (
+  req,
+  res,
+  next: NextFunction
+) => {
   try {
-    const { slug } = req.params as { slug: string };
+    const { slug } = req.params;
 
     const blog = await Blog.findOne({
       attributes: [
@@ -108,9 +121,35 @@ const getBlog: RequestHandler = async (req, res, next: NextFunction) => {
 /**
  * Get all blogs
  */
-const getAllBlogs: RequestHandler = async (_req, res, next: NextFunction) => {
+const getAllBlogs: RequestHandler<
+  unknown,
+  unknown,
+  unknown,
+  AllQueryParams
+> = async (req, res, next: NextFunction) => {
   try {
-    const blogs = await Blog.findAll({
+    const { page, columnName, columnValue, orderBy, orderDir } = req.query;
+    const pageNumber = Number(page);
+
+    let where;
+    let order: [[string, string]] = [['updatedAt', 'DESC']];
+
+    where = { [Op.and]: { published: true } };
+
+    if (columnName && columnValue) {
+      where = {
+        [columnName]: { [Op.iLike]: `%${columnValue}%` },
+        [Op.and]: { published: true },
+      };
+    }
+
+    if (orderBy && orderDir) {
+      order = [[String(orderBy), String(orderDir)]];
+    }
+
+    const { limit, offset } = getPagination(pageNumber);
+
+    const blogsData = await Blog.findAndCountAll({
       attributes: [
         'blogId',
         'title',
@@ -118,10 +157,13 @@ const getAllBlogs: RequestHandler = async (_req, res, next: NextFunction) => {
         'slug',
       ],
       include: { model: User, attributes: ['name', 'email', 'userId'] },
-      where: { published: true },
-      order: [['updatedAt', 'DESC']],
+      where,
+      order,
+      offset,
+      limit,
     });
-    res.json(blogs);
+
+    res.json(getPagingData(blogsData, pageNumber));
   } catch (error: unknown) {
     next(error);
   }
@@ -131,20 +173,16 @@ const getAllBlogs: RequestHandler = async (_req, res, next: NextFunction) => {
  * Create new Blog
  * only admin and authors can create blog (checked through isAdminOrAuthor middleware)
  */
-const create: RequestHandler = async (req, res, next: NextFunction) => {
+const create: RequestHandler<unknown, unknown, NewBlogParams> = async (
+  req,
+  res,
+  next: NextFunction
+) => {
   try {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const userId = req.session.data!.userId;
 
-    const {
-      title,
-      content,
-      published,
-      slug,
-      // name,
-      // originalName,
-      // fileLocation,
-    } = req.body as NewBlogType;
+    const { title, content, published, slug } = req.body;
     const blog = await Blog.create(
       {
         userId,
@@ -175,13 +213,16 @@ const create: RequestHandler = async (req, res, next: NextFunction) => {
  * Update Blog
  * only admin and authors can update blog (checked through isAdminOrAuthor middleware)
  */
-const update: RequestHandler = async (req, res, next: NextFunction) => {
+const update: RequestHandler<unknown, unknown, UpdateBlogParams> = async (
+  req,
+  res,
+  next: NextFunction
+) => {
   try {
     const sessionData = req.session.data;
 
     const blog = req.blog as Blog;
-    const { title, content, slug, published, userId } =
-      req.body as UpdateBlogType;
+    const { title, content, slug, published, userId } = req.body;
 
     // only admin can change the user
     const updateUserId = sessionData?.role === 'admin' ? userId : blog.userId;
@@ -206,7 +247,8 @@ const update: RequestHandler = async (req, res, next: NextFunction) => {
 const toggle: RequestHandler = async (req, res, next: NextFunction) => {
   try {
     const sessionData = req.session.data;
-    const blog = req.blog as Blog;
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const blog = req.blog!;
 
     // only admin and blog creator can deactivate /activate the blog
     const hasAccess =

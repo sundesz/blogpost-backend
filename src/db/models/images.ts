@@ -1,13 +1,13 @@
 import { DataTypes, Model } from 'sequelize';
-import { IImage, IImageInput, ImageType } from '../../types/images';
+import { ImageAttributes, ImageInputAttributes } from '../../types/images';
 
 import { sequelize } from '../index';
 
-class Image extends Model<IImage, IImageInput> implements IImage {
+class Image
+  extends Model<ImageAttributes, ImageInputAttributes>
+  implements ImageAttributes
+{
   public imageId!: string;
-  public imageType!: ImageType;
-  public blogId!: string;
-  public userId!: string;
   public name!: string;
   public originalName!: string;
   public fileLocation!: string;
@@ -22,27 +22,6 @@ Image.init(
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
-    },
-    blogId: {
-      type: DataTypes.UUID,
-      allowNull: true,
-      references: {
-        model: 'Blog',
-        key: 'blogId',
-      },
-    },
-    userId: {
-      type: DataTypes.UUID,
-      allowNull: true,
-      references: {
-        model: 'User',
-        key: 'userId',
-      },
-    },
-    imageType: {
-      type: DataTypes.ENUM('blog', 'user'),
-      allowNull: false,
-      defaultValue: 'blog',
     },
     name: {
       type: DataTypes.STRING,
@@ -61,7 +40,7 @@ Image.init(
     sequelize,
     underscored: true,
     timestamps: true,
-    modelName: 'image',
+    modelName: 'Image',
   }
 );
 

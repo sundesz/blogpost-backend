@@ -1,32 +1,36 @@
 import { NextFunction, RequestHandler } from 'express';
 import bcrypt from 'bcrypt';
-import { CredentialType } from '../../types';
+import { Credential } from '../../types';
 import { getUser } from '../../middleware/helper';
-import { ISessionData } from '../../types/session';
+import { SessionDataAttributes } from '../../types/session';
 import { userMessage } from '../../utils/userMessages';
 
 /**
  * Login request handler
  */
-const handleLogin: RequestHandler = async (req, res, next: NextFunction) => {
+const handleLogin: RequestHandler<unknown, unknown, Credential> = async (
+  req,
+  res,
+  next: NextFunction
+) => {
   try {
-    const { username, password } = req.body as CredentialType;
+    const { username, password } = req.body;
 
     if (!username || !password) {
-      return res.status(400).json(userMessage.warning.REQUIRED_USER_PASS);
+      return res.status(400).json(userMessage.warning.REQUIRED_USER_PASSWORD);
     }
 
     const user = await getUser(username);
     if (!user) {
-      return res.status(401).json(userMessage.error.INVALID_USER_PASS);
+      return res.status(401).json(userMessage.error.INVALID_USER_PASSWORD);
     }
 
     const passwordCorrect = await bcrypt.compare(password, user.passwordHash);
     if (!passwordCorrect) {
-      return res.status(401).json(userMessage.error.INVALID_USER_PASS);
+      return res.status(401).json(userMessage.error.INVALID_USER_PASSWORD);
     }
 
-    const userData: ISessionData = {
+    const userData: SessionDataAttributes = {
       userId: user.userId,
       email: user.email,
       name: user.name,

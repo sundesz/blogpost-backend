@@ -1,4 +1,4 @@
-export interface IComment {
+export interface CommentAttributes {
   commentId: string;
   blogId: string;
   userId: string | null;
@@ -12,9 +12,10 @@ export interface IComment {
 }
 
 // defines the type of the object passed to Sequelize’s model.create
-export type ICommentInput = Omit<IComment, 'commentId'>;
+export type CommentInputAttributes = Omit<CommentAttributes, 'commentId'>;
 
-export type NewCommentType = Pick<
-  IComment,
+//
+export type NewCommentParams = Pick<
+  CommentAttributes,
   'title' | 'content' | 'published'
 > & { rating: number };

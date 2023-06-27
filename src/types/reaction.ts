@@ -1,4 +1,6 @@
-export interface IReaction {
+export type ReactionType = 'thumbsUp' | 'wow' | 'heart';
+
+export interface ReactionAttributes {
   reactionId: string;
   blogId: string;
   userId: string | null;
@@ -9,8 +11,9 @@ export interface IReaction {
 }
 
 // defines the type of the object passed to Sequelize’s model.create
-export type IReactionInput = Omit<IReaction, 'reactionId'>;
+export type ReactionInputAttributes = Omit<ReactionAttributes, 'reactionId'>;
 
-export type ReactionType = 'thumbsUp' | 'wow' | 'heart';
-
-export type NewReactionType = Pick<IReaction, 'blogId' | 'reactionType'>;
+export type NewReactionParams = Pick<
+  ReactionAttributes,
+  'blogId' | 'reactionType'
+>;

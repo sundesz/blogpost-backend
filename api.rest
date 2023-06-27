@@ -5,7 +5,7 @@ GET http://localhost:8080/api/v1/session
 
 ###
 
-GET http://localhost:8080/api/v1/authors
+GET http://localhost:8080/api/v1/authors?columnName=name&columnValue=Sandesh
 
 ###
 GET http://localhost:8080/api/v1/authors/{author-id}
@@ -40,7 +40,7 @@ POST http://localhost:8080/api/v1/logout
 
 
 ###
-GET http://localhost:8080/api/v1/blogs
+GET http://localhost:8080/api/v1/blogs?page=&columnName=title&columnValue=test
 
 
 ###

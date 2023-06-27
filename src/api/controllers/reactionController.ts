@@ -1,16 +1,20 @@
 import { NextFunction, RequestHandler } from 'express';
 import { Reaction } from '../../db/models';
-import { NewReactionType } from '../../types';
+import { IdParams, NewReactionParams } from '../../types';
 
 /**
  * Create new reaction
  */
-const create: RequestHandler = async (req, res, next: NextFunction) => {
+const create: RequestHandler<IdParams, unknown, NewReactionParams> = async (
+  req,
+  res,
+  next: NextFunction
+) => {
   try {
     // TODO:: cannot react on own post
     const userId = req.session.data?.userId;
-    const { id: blogId } = req.params as { id: string };
-    const { reactionType } = req.body as NewReactionType;
+    const { id: blogId } = req.params;
+    const { reactionType } = req.body;
 
     const newReaction = await Reaction.create({
       blogId,
@@ -29,9 +33,13 @@ const create: RequestHandler = async (req, res, next: NextFunction) => {
  * deactivate reaction
  * only admin can delete the reaction (checked through isAdmin middleware)
  */
-const remove: RequestHandler = async (req, res, next: NextFunction) => {
+const remove: RequestHandler<IdParams> = async (
+  req,
+  res,
+  next: NextFunction
+) => {
   try {
-    const { id: reactionId } = req.params as { id: string };
+    const { id: reactionId } = req.params;
 
     await Reaction.destroy({
       where: {

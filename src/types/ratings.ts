@@ -1,10 +1,10 @@
-export interface IRating {
+export interface RatingAttributes {
   ratingId: string;
   commentId: string;
   rating: number;
 }
 
 // defines the type of the object passed to Sequelize’s model.create
-export type IRatingInput = Omit<IRating, 'ratingId'>;
+export type RatingInputAttributes = Omit<RatingAttributes, 'ratingId'>;
 
-export type NewRatingType = Pick<IRating, 'rating'>;
+export type NewRatingAttributes = Pick<RatingAttributes, 'rating'>;

@@ -1,8 +1,11 @@
 import { DataTypes, Model } from 'sequelize';
-import { IRating, IRatingInput } from '../../types/ratings';
+import { RatingAttributes, RatingInputAttributes } from '../../types/ratings';
 import { sequelize } from '../index';
 
-class Rating extends Model<IRating, IRatingInput> implements IRating {
+class Rating
+  extends Model<RatingAttributes, RatingInputAttributes>
+  implements RatingAttributes
+{
   public ratingId!: string;
   public commentId!: string;
   public rating!: number;
@@ -32,7 +35,7 @@ Rating.init(
     sequelize,
     underscored: true,
     timestamps: false,
-    modelName: 'rating',
+    modelName: 'Rating',
   }
 );
 

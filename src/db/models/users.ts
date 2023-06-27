@@ -1,12 +1,20 @@
 import { DataTypes, Model } from 'sequelize';
 import { sequelize } from '../index';
-import { IUser, IUserInput, UserRoleType } from '../../types/users';
+import {
+  UserAttributes,
+  UserInputAttributes,
+  UserRoleType,
+} from '../../types/users';
 
-class User extends Model<IUser, IUserInput> implements IUser {
+class User
+  extends Model<UserAttributes, UserInputAttributes>
+  implements UserAttributes
+{
   public userId!: string;
   public email!: string;
   public name!: string;
   public passwordHash!: string;
+  public imageId!: string | null;
   public isActive!: boolean;
   public role!: UserRoleType;
 
@@ -33,6 +41,14 @@ User.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    imageId: {
+      type: DataTypes.UUID,
+      allowNull: true,
+      references: {
+        model: 'Image',
+        key: 'imageId',
+      },
+    },
     passwordHash: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -50,7 +66,7 @@ User.init(
     sequelize,
     underscored: true,
     timestamps: true,
-    modelName: 'user',
+    modelName: 'User',
   }
 );
 

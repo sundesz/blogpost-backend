@@ -1,8 +1,15 @@
 import { DataTypes, Model } from 'sequelize';
-import { IReaction, IReactionInput, ReactionType } from '../../types/reaction';
+import {
+  ReactionAttributes,
+  ReactionInputAttributes,
+  ReactionType,
+} from '../../types/reaction';
 import { sequelize } from '../index';
 
-class Reaction extends Model<IReaction, IReactionInput> implements IReaction {
+class Reaction
+  extends Model<ReactionAttributes, ReactionInputAttributes>
+  implements ReactionAttributes
+{
   public reactionId!: string;
   public reactionType!: ReactionType;
   public blogId!: string;
@@ -50,7 +57,7 @@ Reaction.init(
     underscored: true,
     timestamps: true,
     freezeTableName: true,
-    modelName: 'reaction',
+    modelName: 'Reaction',
   }
 );
 

@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "start": "NODE_ENV=prod node build/src/index.js",
+    "start": "NODE_ENV=production node build/src/index.js",
     "start:test": "NODE_ENV=test ts-node-dev src/index.ts",
-    "dev": "NODE_ENV=dev ts-node-dev src/index.ts",
+    "dev": "NODE_ENV=development ts-node-dev src/index.ts",
     "lint": "eslint --ext .ts .",
     "test": "jest --verbose --runInBand"
   },
@@ -15,7 +15,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bcrypt": "^5.1.0",
+    "bcrypt": "^5.0.1",
     "connect-session-sequelize": "^7.1.5",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
@@ -24,6 +24,7 @@
     "morgan": "^1.10.0",
     "pg": "^8.9.0",
     "sequelize": "^6.28.0",
+    "sharp": "^0.32.1",
     "umzug": "^3.2.1"
   },
   "devDependencies": {

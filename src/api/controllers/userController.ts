@@ -2,16 +2,20 @@ import { NextFunction, RequestHandler } from 'express';
 import bcrypt from 'bcrypt';
 import { SALT } from '../../config';
 import { User } from '../../db/models';
-import { NewUserInputType } from '../../types';
 import { userMessage } from '../../utils/userMessages';
 import { Sequelize } from 'sequelize';
+import { IdParams, NewUserParams } from '../../types';
 
 /**
  * Create user
  */
-const create: RequestHandler = async (req, res, next: NextFunction) => {
+const create: RequestHandler<unknown, unknown, NewUserParams> = async (
+  req,
+  res,
+  next: NextFunction
+) => {
   try {
-    const { name, email, password, role } = req.body as NewUserInputType;
+    const { name, email, password, role } = req.body;
     const passwordHash = await bcrypt.hash(password, Number(SALT));
 
     await User.create({
@@ -33,9 +37,13 @@ const create: RequestHandler = async (req, res, next: NextFunction) => {
  * only admin can activate / deactivate user (checked through isAdmin middleware)
 
  */
-const toggle: RequestHandler = async (req, res, next: NextFunction) => {
+const toggle: RequestHandler<IdParams> = async (
+  req,
+  res,
+  next: NextFunction
+) => {
   try {
-    const { id: userId } = req.params as { id: string };
+    const { id: userId } = req.params;
 
     await User.update(
       { isActive: Sequelize.literal('NOT is_active') },

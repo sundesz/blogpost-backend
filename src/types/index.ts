@@ -1,14 +1,27 @@
-import { IUser } from './users';
+import { UserAttributes } from './users';
 
 export * from './users';
 export * from './reaction';
 export * from './blogs';
+export * from './comments';
 
-export interface IPassword {
-  password: IUser['passwordHash'];
+export interface Credential {
+  username: UserAttributes['email'];
+  password: UserAttributes['passwordHash'];
 }
 
-export type CredentialType = { username: IUser['email'] } & IPassword;
+export type NewUserParams = Pick<UserAttributes, 'email' | 'name' | 'role'> & {
+  password: UserAttributes['passwordHash'];
+};
 
-export type NewUserInputType = Pick<IUser, 'email' | 'name' | 'role'> &
-  IPassword;
+export interface AllQueryParams {
+  page: number;
+  columnName: string;
+  columnValue: string;
+  orderBy: string;
+  orderDir: string;
+}
+
+export interface IdParams {
+  id: string;
+}

@@ -10,7 +10,7 @@ export const blogFinder: RequestHandler = async (
   next: NextFunction
 ) => {
   try {
-    const { id: blogId } = req.params as { id: string };
+    const { id: blogId } = req.params;
 
     const blog = await Blog.findOne({
       attributes: ['blogId', 'title', 'userId', 'content', 'slug', 'published'],

@@ -7,13 +7,13 @@ let DB_PASSWORD: string;
 let DB_HOST: string;
 
 switch (process.env.NODE_ENV) {
-  case 'prod':
+  case 'production':
     DB_NAME = process.env.DB_NAME_PRODUCTION as string;
     DB_USER = process.env.DB_USER_PRODUCTION as string;
     DB_PASSWORD = process.env.DB_PASSWORD_PRODUCTION as string;
     DB_HOST = process.env.DB_HOST_PRODUCTION as string;
     break;
-  case 'dev':
+  case 'development':
     DB_NAME = process.env.DB_NAME_DEVELOPMENT as string;
     DB_USER = process.env.DB_USER_DEVELOPMENT as string;
     DB_PASSWORD = process.env.DB_PASSWORD_DEVELOPMENT as string;
@@ -26,12 +26,22 @@ switch (process.env.NODE_ENV) {
     DB_HOST = process.env.DB_HOST_TEST as string;
 }
 
-const DB_DRIVER = process.env.DB_DRIVER;
-
-const PORT = process.env.PORT || 8080;
+const PORT = Number(process.env.PORT) || 8080;
 const SALT = process.env.SALT as string;
 
-export const SECRET_KEY = process.env.SECRET_KEY as string;
-export const COOKIE_EXPIRE_TIME = 60 * 60 * 1000; // 60 * 60 *1000;
+const PAGE_LIMIT = Number(process.env.PAGE_LIMIT) || 50;
 
-export { PORT, SALT, DB_USER, DB_PASSWORD, DB_HOST, DB_DRIVER, DB_NAME };
+const SECRET_KEY = process.env.SECRET_KEY as string;
+const COOKIE_EXPIRE_TIME = 60 * 60 * 1000; // 60 * 60 *1000;
+
+export {
+  DB_USER,
+  DB_PASSWORD,
+  DB_HOST,
+  DB_NAME,
+  PORT,
+  SALT,
+  PAGE_LIMIT,
+  SECRET_KEY,
+  COOKIE_EXPIRE_TIME,
+};

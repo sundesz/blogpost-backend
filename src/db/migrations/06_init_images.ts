@@ -8,21 +8,6 @@ export const up: Migration = async ({ context: queryInterface }) => {
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
-    image_type: {
-      type: DataTypes.ENUM('blog', 'user'),
-      allowNull: false,
-      defaultValue: 'blog',
-    },
-    blog_id: {
-      type: DataTypes.UUID,
-      allowNull: true,
-      references: { model: 'blogs', key: 'blog_id' },
-    },
-    user_id: {
-      type: DataTypes.UUID,
-      allowNull: true,
-      references: { model: 'users', key: 'user_id' },
-    },
     name: {
       type: DataTypes.STRING,
       allowNull: false,

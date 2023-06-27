@@ -30,6 +30,11 @@ export const up: Migration = async ({ context: queryInterface }) => {
       allowNull: false,
       defaultValue: 'user',
     },
+    image_id: {
+      type: DataTypes.UUID,
+      allowNull: true,
+      references: { model: 'images', key: 'image_id' },
+    },
     created_at: {
       type: DataTypes.DATE,
       allowNull: false,

@@ -1,6 +1,4 @@
-import { IImage } from './images';
-
-export interface IBlog {
+export interface BlogAttributes {
   blogId: string;
   userId: string;
   title: string;
@@ -13,14 +11,16 @@ export interface IBlog {
 }
 
 // defines the type of the object passed to Sequelize’s model.create
-export type IBlogInput = Omit<IBlog, 'blogId'>;
+export type BlogInputAttributes = Omit<BlogAttributes, 'blogId'>;
+// export interface BlogInputAttributes
+//   extends Optional<BlogAttributes, 'blogId'> {}
 
-export type NewBlogType = Pick<
-  IBlog,
-  'userId' | 'title' | 'content' | 'published' | 'slug'
-> &
-  Pick<IImage, 'name' | 'originalName' | 'fileLocation'>;
-export type UpdateBlogType = Pick<
-  IBlog,
+export type NewBlogParams = Pick<
+  BlogAttributes,
+  'title' | 'content' | 'published' | 'slug'
+>;
+
+export type UpdateBlogParams = Pick<
+  BlogAttributes,
   'title' | 'content' | 'slug' | 'published' | 'userId'
 >;

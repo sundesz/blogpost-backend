@@ -1,16 +1,20 @@
 import { NextFunction, RequestHandler } from 'express';
 import { Comment, Rating } from '../../db/models';
-import { NewCommentType } from '../../types/comments';
+import { IdParams, NewCommentParams } from '../../types';
 
 /**
  * Create new comment
  */
-const create: RequestHandler = async (req, res, next: NextFunction) => {
+const create: RequestHandler<IdParams, unknown, NewCommentParams> = async (
+  req,
+  res,
+  next: NextFunction
+) => {
   try {
     // TODO:: cannot comment on own post && only one comment per user
     const userId = req.session.data?.userId;
-    const { id: blogId } = req.params as { id: string };
-    const { title, content, published, rating } = req.body as NewCommentType;
+    const { id: blogId } = req.params;
+    const { title, content, published, rating } = req.body;
 
     const newComment = await Comment.create({
       blogId,
@@ -35,10 +39,14 @@ const create: RequestHandler = async (req, res, next: NextFunction) => {
  * Update comment
  * only admin or user can update the comment (checked through isAdmin middleware)
  */
-const update: RequestHandler = async (req, res, next: NextFunction) => {
+const update: RequestHandler<IdParams, unknown, NewCommentParams> = async (
+  req,
+  res,
+  next: NextFunction
+) => {
   try {
-    const { id: commentId } = req.params as { id: string };
-    const { title, content, published, rating } = req.body as NewCommentType;
+    const { id: commentId } = req.params;
+    const { title, content, published, rating } = req.body;
 
     const comment = await Comment.findByPk(commentId);
 
@@ -67,10 +75,14 @@ const update: RequestHandler = async (req, res, next: NextFunction) => {
 /**
  * Deactivate/Activate comment
  */
-const toggle: RequestHandler = async (req, res, next: NextFunction) => {
+const toggle: RequestHandler<IdParams> = async (
+  req,
+  res,
+  next: NextFunction
+) => {
   try {
     const sessionData = req.session.data;
-    const { id: commentId } = req.params as { id: string };
+    const { id: commentId } = req.params;
 
     const comment = await Comment.findByPk(commentId);
 

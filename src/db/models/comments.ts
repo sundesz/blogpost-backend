@@ -1,12 +1,18 @@
 import { DataTypes, Model } from 'sequelize';
-import { IComment, ICommentInput } from '../../types/comments';
+import {
+  CommentAttributes,
+  CommentInputAttributes,
+} from '../../types/comments';
 import { sequelize } from '../index';
 
-class Comment extends Model<IComment, ICommentInput> implements IComment {
+class Comment
+  extends Model<CommentAttributes, CommentInputAttributes>
+  implements CommentAttributes
+{
   public commentId!: string;
   public blogId!: string;
   public userId!: string | null;
-  public parentId!: string;
+  public parentId!: string | null;
   public title!: string;
   public content!: string;
   public published!: boolean;
@@ -64,7 +70,7 @@ Comment.init(
     sequelize,
     underscored: true,
     timestamps: true,
-    modelName: 'comment',
+    modelName: 'Comment',
   }
 );
 

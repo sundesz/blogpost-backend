@@ -1,13 +1,32 @@
+// {
+//   "compilerOptions": {
+//     "target": "ES6",
+//     "outDir": "./build/",
+//     "module": "commonjs",
+//     "strict": true,
+//     "noUnusedLocals": true,
+//     "noUnusedParameters": true,
+//     // "noImplicitReturns": true,
+//     "noFallthroughCasesInSwitch": true,
+//     "esModuleInterop": true
+//   }
+// }
+
 {
   "compilerOptions": {
-    "target": "ES6",
-    "outDir": "./build/",
+    "target": "ES2018",
     "module": "commonjs",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "noImplicitAny": true,
+    "resolveJsonModule": true,
     "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    // "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "esModuleInterop": true
-  }
+    "outDir": "dist",
+    "baseUrl": ".",
+    "paths": {
+      "*": ["node_modules/*"]
+    }
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
 }

@@ -5,11 +5,11 @@ import cors from 'cors';
 import logger from 'morgan';
 
 import { errorHandler, unknownEndpoint } from './middleware';
-import { IBlog } from './types/blogs';
 import { sequelize } from './db';
 import { COOKIE_EXPIRE_TIME, SECRET_KEY } from './config';
-import { ISessionData } from './types/session';
+import { SessionDataAttributes } from './types/session';
 import routers from './api/routers';
+import { Blog } from './db/models';
 
 /**
  * Custom types for Express Request
@@ -18,7 +18,7 @@ declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Express {
     interface Request {
-      blog?: IBlog;
+      blog?: Blog;
     }
   }
 }
@@ -27,7 +27,7 @@ declare module 'express-session' {
   interface SessionData {
     isAuth?: boolean;
     views?: number;
-    data: ISessionData;
+    data: SessionDataAttributes;
     // cookie?: CookieOptions | undefined;
   }
 }
@@ -49,19 +49,19 @@ const sessionConf = {
   saveUninitialized: true,
   store: sessionStore,
   cookie: {
-    secure: process.env.NODE_ENV === 'prod',
+    secure: process.env.NODE_ENV === 'production',
     sameSite: true,
     maxAge: COOKIE_EXPIRE_TIME,
   },
 };
 
-if (app.get('env') === 'prod') {
+if (app.get('env') === 'production') {
   app.set('trust proxy', 1); // trust first proxy
   sessionConf.cookie.secure = true;
   app.use(logger('dev'));
 }
 
-if (process.env.NODE_ENV === 'dev') {
+if (process.env.NODE_ENV === 'development') {
   app.use(logger('dev'));
 }
 
@@ -78,16 +78,7 @@ app.use(express.urlencoded({ extended: true }));
 app.get('/', (req: Request, res: Response) => {
   if (req.session.views) {
     req.session.views++;
-    // req.setHeader('Content-Type', 'text/html');
-    // res.write(`<p>views: ${req.session.views}</p>`);
-    // res.write(`<p>expires in: ${req.session.cookie.maxAge / 1000}</p>`);
-    // res.end();
-    res.send(
-      `<p>views: ${req.session.views}</p>`
-      // `<p>views: ${req.session.views}</p> <br> <p>expires in: ${
-      //   req.session.cookie.maxAge / 1000
-      // }</p>`
-    );
+    res.send(`<p>views: ${req.session.views}</p>`);
   } else {
     req.session.views = 1;
     res.send('welcome to the session demo. refresh!');
@@ -95,6 +86,7 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 app.get('/ping', (_req: Request, res: Response) => {
+  console.log('hi');
   res.send('pong');
 });
 
@@ -115,14 +107,3 @@ app.use(errorHandler);
 export default app;
 
 // TODO:: hide all react-dev and redux-dev in production mode
-
-// declare global {
-//   // eslint-disable-next-line @typescript-eslint/no-namespace
-//   namespace NodeJS {
-//     interface ProcessEnv {
-//       PORT: string;
-//       NODE_ENV: 'development' | 'production';
-//       DB_URI: string;
-//     }
-//   }
-// }
