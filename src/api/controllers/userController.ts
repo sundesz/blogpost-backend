@@ -4,7 +4,7 @@ import { SALT } from '../../config';
 import { User } from '../../db/models';
 import { userMessage } from '../../utils/userMessages';
 import { Sequelize } from 'sequelize';
-import { IdParams, NewUserParams } from '../../types';
+import { NewUserParams } from '../../types';
 
 /**
  * Create user
@@ -37,11 +37,7 @@ const create: RequestHandler<unknown, unknown, NewUserParams> = async (
  * only admin can activate / deactivate user (checked through isAdmin middleware)
 
  */
-const toggle: RequestHandler<IdParams> = async (
-  req,
-  res,
-  next: NextFunction
-) => {
+const toggle: RequestHandler = async (req, res, next: NextFunction) => {
   try {
     const { id: userId } = req.params;
 

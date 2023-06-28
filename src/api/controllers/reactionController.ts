@@ -33,11 +33,7 @@ const create: RequestHandler<IdParams, unknown, NewReactionParams> = async (
  * deactivate reaction
  * only admin can delete the reaction (checked through isAdmin middleware)
  */
-const remove: RequestHandler<IdParams> = async (
-  req,
-  res,
-  next: NextFunction
-) => {
+const remove: RequestHandler = async (req, res, next: NextFunction) => {
   try {
     const { id: reactionId } = req.params;
 
