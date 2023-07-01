@@ -17,17 +17,19 @@ const handleLogin: RequestHandler<unknown, unknown, Credential> = async (
     const { username, password } = req.body;
 
     if (!username || !password) {
-      return res.status(400).json(userMessage.warning.REQUIRED_USER_PASSWORD);
+      return res
+        .status(400)
+        .json(userMessage.warning.REQUIRED_USERNAME_PASSWORD);
     }
 
     const user = await getUser(username);
     if (!user) {
-      return res.status(401).json(userMessage.error.INVALID_USER_PASSWORD);
+      return res.status(401).json(userMessage.error.INVALID_USERNAME_PASSWORD);
     }
 
     const passwordCorrect = await bcrypt.compare(password, user.passwordHash);
     if (!passwordCorrect) {
-      return res.status(401).json(userMessage.error.INVALID_USER_PASSWORD);
+      return res.status(401).json(userMessage.error.INVALID_USERNAME_PASSWORD);
     }
 
     const userData: SessionDataAttributes = {
