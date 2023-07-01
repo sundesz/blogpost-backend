@@ -3,3 +3,6 @@
 /pgdata
 /pgdata-dev
 logs
+
+# Static folders
+uploads/*
