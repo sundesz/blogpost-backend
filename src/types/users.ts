@@ -14,4 +14,5 @@ export interface UserAttributes {
 }
 
 // defines the type of the object passed to Sequelize’s model.create
-export type UserInputAttributes = Omit<UserAttributes, 'userId'>;
+export type UserInputAttributes = UserAttributes;
+// export type UserInputAttributes = Omit<UserAttributes, 'userId'>;
