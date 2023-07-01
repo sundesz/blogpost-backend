@@ -75,6 +75,8 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use('/images', express.static('uploads'));
+
 app.get('/', (req: Request, res: Response) => {
   if (req.session.views) {
     req.session.views++;
@@ -86,7 +88,6 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 app.get('/ping', (_req: Request, res: Response) => {
-  console.log('hi');
   res.send('pong');
 });
 
