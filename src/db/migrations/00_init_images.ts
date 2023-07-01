@@ -12,11 +12,11 @@ export const up: Migration = async ({ context: queryInterface }) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    originalName: {
+    original_name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    fileLocation: {
+    file_location: {
       type: DataTypes.STRING,
       allowNull: false,
     },
