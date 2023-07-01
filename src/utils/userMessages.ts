@@ -3,9 +3,11 @@ export const userMessage = {
     USER_CREATED: 'User created.',
   },
   warning: {
-    REQUIRED_USER_PASSWORD: 'Username and password are required.',
+    REQUIRED_USERNAME_PASSWORD: 'Username and password are required.',
+    USERNAME_ALREADY_EXISTS: 'Username already taken.',
   },
   error: {
-    INVALID_USER_PASSWORD: 'Invalid username or password.',
+    INVALID_USERNAME_PASSWORD: 'Invalid username or password.',
+    UNACCEPTED_FILE_TYPE: 'Unaccepted file type.',
   },
 };
