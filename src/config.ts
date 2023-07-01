@@ -30,6 +30,7 @@ const PORT = Number(process.env.PORT) || 8080;
 const SALT = process.env.SALT as string;
 
 const PAGE_LIMIT = Number(process.env.PAGE_LIMIT) || 50;
+const FILE_SIZE_LIMIT = Number(process.env.FILE_SIZE_LIMIT) || 1024 * 1024;
 
 const SECRET_KEY = process.env.SECRET_KEY as string;
 const COOKIE_EXPIRE_TIME = 60 * 60 * 1000; // 60 * 60 *1000;
@@ -42,6 +43,7 @@ export {
   PORT,
   SALT,
   PAGE_LIMIT,
+  FILE_SIZE_LIMIT,
   SECRET_KEY,
   COOKIE_EXPIRE_TIME,
 };
