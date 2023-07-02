@@ -104,7 +104,28 @@ const getAllAuthor: RequestHandler<
   }
 };
 
+/**
+ * Get all author names
+ */
+const getAuthorNames: RequestHandler = async (
+  _req,
+  res,
+  next: NextFunction
+) => {
+  try {
+    const results = await User.findAll({
+      attributes: ['name', 'userId'],
+      where: { role: 'author', isActive: true },
+    });
+
+    res.json(results);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export default {
   getAuthor,
   getAllAuthor,
+  getAuthorNames,
 };

@@ -8,7 +8,10 @@ GET http://localhost:8080/api/v1/session
 GET http://localhost:8080/api/v1/authors?columnName=name&columnValue=Sandesh
 
 ###
-GET http://localhost:8080/api/v1/authors/{author-id}
+GET http://localhost:8080/api/v1/authors/names
+
+###
+GET http://localhost:8080/api/v1/authors/e6146d45-67b9-4955-b339-ad0bdd6f42fc
 
 ###
 PUT http://localhost:8080/api/v1/users/deactivate/{author-id}
