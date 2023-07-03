@@ -311,7 +311,7 @@ const uploadImage: RequestHandler = async (req, res, next: NextFunction) => {
         fileLocation: inPostImageDestinationPath,
       });
 
-      // return res.json({ imageId: imageData.dataValues.imageId });
+      // https://ckeditor.com/docs/ckeditor4/latest/guide/dev_file_upload.html#server-side-configuration
       const imageUrl = `http://localhost:8080/images/blogs/${imageId}.png`;
       res
         .status(200)
