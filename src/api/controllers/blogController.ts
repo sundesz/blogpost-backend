@@ -18,9 +18,9 @@ import { Op } from 'sequelize';
 const reactionCountSubQuery = (reactionType: ReactionType) => {
   return sequelize.literal(`(
     SELECT COUNT(*)::int
-    FROM reaction AS reaction
+    FROM reaction
     WHERE
-        reaction.blog_id = "blog".blog_id
+        reaction.blog_id = "Blog".blog_id
         AND
         reaction.reaction_type ='${reactionType}')`);
 };
@@ -32,10 +32,10 @@ const reactionCountSubQuery = (reactionType: ReactionType) => {
 const ratingCountSubQuery = (slug: string, rating: number) => {
   return sequelize.literal(`(
     SELECT COUNT(*)::int
-    FROM blogs AS "blog"
-    LEFT JOIN comments AS "comments" ON "blog".blog_id = "comments".blog_id
-    LEFT JOIN ratings AS ratings ON "comments".comment_id = ratings.comment_id
-    WHERE "blog".slug = '${slug}'
+    FROM blogs
+    LEFT JOIN comments ON blogs.blog_id = comments.blog_id
+    LEFT JOIN ratings ON comments.comment_id = ratings.comment_id
+    WHERE blogs.slug = '${slug}'
       AND ratings.rating ='${rating}')`);
 };
 
