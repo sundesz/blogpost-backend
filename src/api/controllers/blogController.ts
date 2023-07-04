@@ -295,8 +295,11 @@ const uploadImage: RequestHandler = async (req, res, next: NextFunction) => {
       inPostImageDestinationPath = `/uploads/blogs/${imageId}.png`;
 
       await sharp(blogImage.buffer)
-        .resize(800, 600, { withoutEnlargement: true, fit: sharp.fit.contain })
-
+        .resize({
+          fit: sharp.fit.contain,
+          withoutEnlargement: true,
+          width: 800,
+        })
         .png({
           // https://sharp.pixelplumbing.com/api-output#png
           compressionLevel: 7,
