@@ -205,14 +205,6 @@ const create: RequestHandler<unknown, unknown, NewBlogParams> = async (
       // { returning: false }
     );
 
-    // await Image.create({
-    //   // imageType: 'blog',
-    //   blogId: blog.blogId,
-    //   name,
-    //   originalName,
-    //   fileLocation,
-    // });
-
     res.json(blog.slug);
   } catch (error: unknown) {
     next(error);
