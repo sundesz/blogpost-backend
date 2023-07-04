@@ -35,7 +35,7 @@ export const blogFinder: RequestHandler = async (
 export const getUser = async (email: string) => {
   return await User.findOne({
     where: { email, isActive: true },
-    attributes: ['userId', 'name', 'email', 'passwordHash', 'role'],
+    attributes: ['userId', 'name', 'email', 'passwordHash', 'role', 'imageId'],
   });
 };
 

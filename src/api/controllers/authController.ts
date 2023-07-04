@@ -37,6 +37,9 @@ const handleLogin: RequestHandler<unknown, unknown, Credential> = async (
       email: user.email,
       name: user.name,
       role: user.role,
+      profilePic: user.imageId
+        ? `images/profile_pictures/${user.imageId}.png`
+        : '',
     };
 
     req.session.isAuth = true;
