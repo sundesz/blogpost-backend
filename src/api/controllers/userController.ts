@@ -44,8 +44,11 @@ const create: RequestHandler<unknown, unknown, NewUserParams, unknown> = async (
       profilePicDestinationPath = `/uploads/profile_pictures/${userId}.png`;
 
       await sharp(profilePic.buffer)
-        .resize(200, 200, { withoutEnlargement: true, fit: sharp.fit.contain })
-
+        .resize({
+          fit: sharp.fit.contain,
+          withoutEnlargement: true,
+          width: 100,
+        })
         .png({
           // https://sharp.pixelplumbing.com/api-output#png
           compressionLevel: 8,
