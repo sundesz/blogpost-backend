@@ -38,7 +38,7 @@ const handleLogin: RequestHandler<unknown, unknown, Credential> = async (
       name: user.name,
       role: user.role,
       profilePic: user.imageId
-        ? `images/profile_pictures/${user.imageId}.png`
+        ? `images/profile_pictures/${user.userId}.png` // userId is image name
         : '',
     };
 
