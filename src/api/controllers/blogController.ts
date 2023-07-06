@@ -165,6 +165,7 @@ const getAllBlogs: RequestHandler<
         ],
         // [sequelize.fn('LEFT', sequelize.col('content'), 50), 'content'], // Return first n characters in the string
         'slug',
+        'updatedAt',
       ],
       include: { model: User, attributes: ['name', 'email', 'userId'] },
       where,
