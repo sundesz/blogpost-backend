@@ -1,7 +1,8 @@
 import { ErrorRequestHandler } from 'express';
 
 export const errorHandler: ErrorRequestHandler = (error, _req, res, next) => {
-  const errorNumber = Number(error.status) ?? 400;
+  console.log(error.status);
+  const errorNumber = isNaN(error.status) ? 400 : Number(error.status);
 
   switch (error.name) {
     case 'SequelizeUniqueConstraintError':
