@@ -17,7 +17,7 @@ const getAuthor: RequestHandler<IdParams> = async (
     const { id: userId } = req.params;
 
     const author = await User.findOne({
-      attributes: ['email', 'name', 'userId'],
+      attributes: ['email', 'name', 'userId', 'imageId'],
       where: { userId, isActive: true, role: 'author' },
       include: {
         model: Blog,
@@ -38,12 +38,7 @@ const getAuthor: RequestHandler<IdParams> = async (
       return res.status(404).end();
     }
 
-    res.json({
-      ...author,
-      profilePic: author.imageId
-        ? `images/profile_pictures/${author.userId}.png` // userId is image name
-        : '',
-    });
+    res.json(author);
   } catch (error) {
     next(error);
   }
