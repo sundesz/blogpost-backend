@@ -57,6 +57,7 @@ Reaction.init(
     underscored: true,
     timestamps: true,
     freezeTableName: true,
+    tableName: 'reaction',
     modelName: 'Reaction',
   }
 );
