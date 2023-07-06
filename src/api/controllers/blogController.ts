@@ -13,6 +13,7 @@ import { Op, literal } from 'sequelize';
 import fs from 'fs';
 import { SRC_DIR } from '../../index';
 import sharp from 'sharp';
+import { PORT } from '../../config';
 
 /**
  * Reaction count subquery
@@ -308,7 +309,7 @@ const uploadImage: RequestHandler = async (req, res, next: NextFunction) => {
       });
 
       // https://ckeditor.com/docs/ckeditor4/latest/guide/dev_file_upload.html#server-side-configuration
-      const imageUrl = `http://localhost:8080/images/blogs/${imageId}.png`;
+      const imageUrl = `http://localhost:${PORT}/images/blogs/${imageId}.png`;
       res
         .status(200)
         .json({ uploaded: 1, fileName: `${imageId}.png`, url: imageUrl }); // Send the image URL in the response
