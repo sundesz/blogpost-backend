@@ -288,9 +288,11 @@ const uploadImage: RequestHandler = async (req, res, next: NextFunction) => {
 
       inPostImageDestinationPath = `/uploads/blogs/${imageId}.png`;
 
+      // TODO: delete all image of same blog before uploading
+
       await sharp(blogImage.buffer)
         .resize({
-          fit: sharp.fit.contain,
+          fit: sharp.fit.cover,
           withoutEnlargement: true,
           width: 800,
         })
