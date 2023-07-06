@@ -38,7 +38,12 @@ const getAuthor: RequestHandler<IdParams> = async (
       return res.status(404).end();
     }
 
-    res.json(author);
+    res.json({
+      ...author,
+      profilePic: author.imageId
+        ? `images/profile_pictures/${author.userId}.png` // userId is image name
+        : '',
+    });
   } catch (error) {
     next(error);
   }
@@ -79,7 +84,7 @@ const getAllAuthor: RequestHandler<
 
     const { limit, offset } = getPagination(pageNumber);
     const authorsData = await User.findAndCountAll({
-      attributes: ['email', 'name', 'userId'],
+      attributes: ['email', 'name', 'userId', 'imageId'],
       // include: {
       //   model: Blog,
       //   attributes: [
