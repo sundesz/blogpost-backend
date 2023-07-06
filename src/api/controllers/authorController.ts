@@ -80,18 +80,12 @@ const getAllAuthor: RequestHandler<
     const { limit, offset } = getPagination(pageNumber);
     const authorsData = await User.findAndCountAll({
       attributes: ['email', 'name', 'userId', 'imageId'],
-      // include: {
-      //   model: Blog,
-      //   attributes: [
-      //     'blogId',
-      //     'title',
-      //     [sequelize.fn('LEFT', sequelize.col('content'), 50), 'content'], // Return first n characters in the string
-      //     'slug',
-      //     'updatedAt',
-      //   ],
-      //   required: false,
-      //   where: { published: true },
-      // },
+      include: {
+        model: Blog,
+        attributes: ['blogId'],
+        required: false,
+        where: { published: true },
+      },
       where,
       order,
       offset,
