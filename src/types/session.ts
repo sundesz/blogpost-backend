@@ -18,5 +18,5 @@ export interface SessionDataAttributes {
   email: string;
   userId: string;
   role: UserRoleType;
-  profilePic: string;
+  profilePic: string | null;
 }
