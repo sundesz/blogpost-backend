@@ -58,6 +58,10 @@ const getBlog: RequestHandler<BlogParams> = async (
 ) => {
   try {
     const { slug } = req.params;
+    const where =
+      req.session.data?.role === 'admin'
+        ? {}
+        : { published: true, passive: false };
 
     const blog = await Blog.findOne({
       attributes: [
@@ -105,11 +109,11 @@ const getBlog: RequestHandler<BlogParams> = async (
             'content',
             'updatedAt',
           ],
-          where: { published: true, passive: false },
+          where,
           required: false,
         },
       ],
-      where: { slug, published: true, passive: false },
+      where: { slug, ...where },
       order: [['updatedAt', 'DESC']],
     });
 
@@ -167,6 +171,7 @@ const getAllBlogs: RequestHandler<
         // [sequelize.fn('LEFT', sequelize.col('content'), 50), 'content'], // Return first n characters in the string
         'slug',
         'updatedAt',
+        'published',
       ],
       include: { model: User, attributes: ['name', 'email', 'userId'] },
       where,
