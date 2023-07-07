@@ -31,8 +31,7 @@ const getAuthor: RequestHandler<IdParams> = async (
     let where = {};
     where = { published: true };
     if (req.session.data !== undefined) {
-      const { role: sessionRole, userId: sessionUserId } = req.session.data;
-      where = sessionRole === 'admin' || sessionUserId === userId ? {} : where;
+      where = req.session.data.role === 'admin' ? {} : where;
     }
 
     const author = await User.findOne({

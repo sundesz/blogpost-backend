@@ -58,10 +58,11 @@ const getBlog: RequestHandler<BlogParams> = async (
 ) => {
   try {
     const { slug } = req.params;
-    const where =
-      req.session.data?.role === 'admin'
-        ? {}
-        : { published: true, passive: false };
+    let where = {};
+    where = { published: true };
+    if (req.session.data !== undefined) {
+      where = req.session.data.role === 'admin' ? {} : where;
+    }
 
     const blog = await Blog.findOne({
       attributes: [
