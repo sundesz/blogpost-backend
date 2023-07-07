@@ -15,7 +15,6 @@ export const blogFinder: RequestHandler = async (
     const blog = await Blog.findOne({
       attributes: ['blogId', 'title', 'userId', 'content', 'slug', 'published'],
       where: { blogId },
-      order: [['updatedAt', 'DESC']],
     });
 
     if (!blog) {
