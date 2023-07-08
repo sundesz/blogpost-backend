@@ -165,7 +165,7 @@ const getAllBlogs: RequestHandler<
         'title',
         [
           literal(
-            "substring(regexp_replace(content, '<[^>]+>', '', 'g'), 1, 50)"
+            "substring(regexp_replace(content, '<[^>]+>', '', 'g'), 1, 100)"
           ),
           'content',
         ],
@@ -174,7 +174,10 @@ const getAllBlogs: RequestHandler<
         'updatedAt',
         'published',
       ],
-      include: { model: User, attributes: ['name', 'email', 'userId'] },
+      include: {
+        model: User,
+        attributes: ['name', 'email', 'userId', 'imageId'],
+      },
       where,
       order,
       offset,

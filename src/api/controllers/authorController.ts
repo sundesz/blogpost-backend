@@ -44,7 +44,7 @@ const getAuthor: RequestHandler<IdParams> = async (
           'title',
           [
             literal(
-              "substring(regexp_replace(content, '<[^>]+>', '', 'g'), 1, 50)"
+              "substring(regexp_replace(content, '<[^>]+>', '', 'g'), 1, 100)"
             ),
             'content',
           ],
