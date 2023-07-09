@@ -25,9 +25,10 @@ switch (process.env.NODE_ENV) {
     DB_PASSWORD = process.env.DB_PASSWORD_TEST as string;
     DB_HOST = process.env.DB_HOST_TEST as string;
 }
+const SERVER_HOST = process.env.SERVER_HOST || 'localhost';
 
 const PORT = Number(process.env.PORT) || 8080;
-const SALT = process.env.SALT as string;
+const SALT = process.env.SALT || 12;
 
 const PAGE_LIMIT = Number(process.env.PAGE_LIMIT) || 50;
 const FILE_SIZE_LIMIT = Number(process.env.FILE_SIZE_LIMIT) || 1024 * 1024;
@@ -40,6 +41,7 @@ export {
   DB_PASSWORD,
   DB_HOST,
   DB_NAME,
+  SERVER_HOST,
   PORT,
   SALT,
   PAGE_LIMIT,
